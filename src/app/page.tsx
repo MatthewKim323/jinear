@@ -39,7 +39,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
   return (
     <>
       <Nav />
-      <main>
+      <main className="page-main">
         {Object.entries(SECTIONS).map(([key, S]) => (
           <S key={key} />
         ))}
