@@ -42,3 +42,6 @@ next-env.d.ts
 
 # capture reference (never committed: third-party assets)
 /reference/
+
+# origin blackout: the source url stays local
+reference/*/.origin.json
