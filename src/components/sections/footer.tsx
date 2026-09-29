@@ -77,7 +77,6 @@ const LEGAL: FtLink[] = COLUMNS[COLUMNS.length - 1].links;
 
 const CSS = `
 .ft-root {
-  padding-top: 224px;
   background: rgb(8, 9, 10);
 }
 .ft-footer {
@@ -212,9 +211,6 @@ const CSS = `
   }
 }
 @media (max-width: 640px) {
-  .ft-root {
-    padding-top: 96px;
-  }
   .ft-inner {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 48px 16px;

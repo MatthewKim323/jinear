@@ -607,9 +607,11 @@ html {
 /* Fixed header offset */
 .page-main {
   padding-top: 72px;
+  padding-bottom: 224px;
 }
 @media (max-width: 640px) {
   .page-main {
     padding-top: 64px;
+    padding-bottom: 96px;
   }
 }
