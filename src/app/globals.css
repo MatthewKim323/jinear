@@ -1,11 +1,605 @@
 @import "tailwindcss";
 
+/*
+ * Jinear design tokens.
+ * Values are measured from the reference capture (computed styles at 1440 / 1024 / 810 / 390).
+ * See reference/TOKENS.md for what each token is used for and which values are inferred.
+ */
+
 :root {
+  color-scheme: dark;
+
+  /* ---------- Fonts ---------- */
   --font-regular: var(--font-inter), "SF Pro Display", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   --font-monospace: var(--font-mono-src), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Twemoji Mozilla", "Noto Color Emoji", "Android Emoji";
+
+  /* ---------- Font weights ---------- */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 510;
+  --font-weight-semibold: 590;
+  --font-weight-bold: 680;
+
+  /* ---------- Font sizes ---------- */
+  --font-size-tiny: 0.625rem;     /* 10px */
+  --font-size-micro: 0.6875rem;   /* 11px */
+  --font-size-mini: 0.75rem;      /* 12px */
+  --font-size-small: 0.8125rem;   /* 13px */
+  --font-size-regular: 0.9375rem; /* 15px */
+  --font-size-large: 1.125rem;    /* 18px */
+
+  /* ---------- Text scale (body copy) ---------- */
+  --text-large-size: 1.125rem;          /* 18px */
+  --text-large-line-height: 1.6;        /* 28.8px */
+  --text-large-letter-spacing: -0.165px;
+  --text-regular-size: 0.9375rem;       /* 15px */
+  --text-regular-line-height: 1.6;      /* 24px */
+  --text-regular-letter-spacing: -0.165px;
+  --text-small-size: 0.875rem;          /* 14px */
+  --text-small-line-height: 1.5;        /* 21px */
+  --text-small-letter-spacing: -0.182px;
+  --text-mini-size: 0.8125rem;          /* 13px */
+  --text-mini-line-height: 1.5;         /* 19.5px */
+  --text-mini-letter-spacing: -0.13px;
+  --text-micro-size: 0.75rem;           /* 12px */
+  --text-micro-line-height: 1.4;        /* 16.8px */
+  --text-micro-letter-spacing: normal;
+  --text-tiny-size: 0.625rem;           /* 10px */
+  --text-tiny-line-height: 1.4;         /* 14px */
+  --text-tiny-letter-spacing: -0.15px;
+
+  /* ---------- Title scale (headings) ---------- */
+  --title-1-size: 1.0625rem;            /* 17px (not seen on this page) */
+  --title-1-line-height: 1.4;
+  --title-1-letter-spacing: -0.012em;
+  --title-2-size: 1.25rem;              /* 20px */
+  --title-2-line-height: 1.33;          /* 26.6px */
+  --title-2-letter-spacing: -0.012em;   /* -0.24px */
+  --title-3-size: 1.5rem;               /* 24px */
+  --title-3-line-height: 1.33;          /* 31.92px */
+  --title-3-letter-spacing: -0.012em;   /* -0.288px */
+  --title-4-size: 2rem;                 /* 32px */
+  --title-4-line-height: 1.125;         /* 36px */
+  --title-4-letter-spacing: -0.022em;   /* -0.704px */
+  --title-5-size: 2.5rem;               /* 40px (not seen on this page) */
+  --title-5-line-height: 1.1;
+  --title-5-letter-spacing: -0.022em;
+  --title-6-size: 3rem;                 /* 48px */
+  --title-6-line-height: 1;
+  --title-6-letter-spacing: -0.022em;   /* -1.056px */
+  --title-7-size: 3.5rem;               /* 56px (not seen on this page) */
+  --title-7-line-height: 1;
+  --title-7-letter-spacing: -0.022em;
+  --title-8-size: 4rem;                 /* 64px */
+  --title-8-line-height: 1;
+  --title-8-letter-spacing: -0.022em;   /* -1.408px */
+  --title-9-size: 4.5rem;               /* 72px */
+  --title-9-line-height: 1;
+  --title-9-letter-spacing: -0.022em;   /* -1.584px */
+
+  /* Prose heading aliases */
+  --h1-size: var(--title-5-size);
+  --h1-line-height: var(--title-5-line-height);
+  --h1-letter-spacing: var(--title-5-letter-spacing);
+  --h2-size: var(--title-3-size);
+  --h2-line-height: var(--title-3-line-height);
+  --h2-letter-spacing: var(--title-3-letter-spacing);
+  --h2-bottom-margin: 12px;
+  --h3-size: var(--title-3-size);
+  --h3-line-height: var(--title-3-line-height);
+  --h3-letter-spacing: var(--title-3-letter-spacing);
+  --h3-bottom-margin: 16px;
+  --h4-size: var(--title-1-size);
+  --h4-line-height: var(--title-1-line-height);
+  --h4-letter-spacing: var(--title-1-letter-spacing);
+  --h4-bottom-margin: 18px;
+  --p-size: var(--text-large-size);
+  --p-line-height: var(--text-large-line-height);
+  --p-letter-spacing: var(--text-large-letter-spacing);
+  --block-spacing-small: 8px;
+  --block-spacing: 16px;
+  --list-inset: 24px;
+  --figure-margin: 32px;
+  --image-figure-margin: 48px;
+  --image-figure-margin-tablet: 32px;
+  --hanging-quote-indent: -0.5ch;
+
+  /* ---------- Backgrounds ---------- */
+  --color-bg-primary: #08090a;          /* page, html, body, footer */
+  --color-bg-level-1: #0f1011;          /* cards, panels, avatars, chat bubbles */
+  --color-bg-level-2: #161718;          /* raised panel variant */
+  --color-bg-frame: #101112;            /* hero app frame background */
+  --color-bg-deep: #090a0b;
+  --color-bg-deep-alt: #121414;
+  --color-bg-secondary: #1c1c1f;        /* hover backgrounds */
+  --color-bg-tertiary: #232326;
+  --color-bg-quaternary: #28282c;
+  --color-bg-control: #1c1c1d;          /* small preview button */
+  --color-bg-translucent: rgba(255, 255, 255, 0.05);
+  --color-bg-translucent-soft: rgba(255, 255, 255, 0.02);
+  --color-bg-translucent-strong: rgba(255, 255, 255, 0.08);
+  --color-bg-shadow: #000000;
+
+  /* ---------- Text ---------- */
+  --color-text-primary: #f7f8f8;
+  --color-text-secondary: #d0d6e0;
+  --color-text-tertiary: #8a8f98;
+  --color-text-quaternary: #62666d;
+  --color-text-muted-alt: #626366;
+  --color-text-branch: #949496;
+  --color-text-invert: #08090a;
+
+  /* ---------- Borders ---------- */
+  --color-border-primary: #23252a;
+  --color-border-secondary: #2e2e32;
+  --color-border-tertiary: #24282c;
+  --color-border-translucent: rgba(255, 255, 255, 0.05);
+  --color-border-translucent-strong: rgba(255, 255, 255, 0.08);
+  --color-border-translucent-stronger: rgba(255, 255, 255, 0.12);
+  --border-width: 1px;
+  --edge-highlight-color: #ffffff1f;
+  --edge-highlight-radius: 8px;
+  --edge-highlight-size: 1px;
+  --gradientBorder-gradient: linear-gradient(to bottom right, #ffffff1f, #ffffff0a);
+  --gradientBorder-size: 1px;
+
+  /* ---------- Brand and accents ---------- */
+  --color-brand-bg: #5e6ad2;
+  --color-brand-text: #ffffff;
+  --color-indigo: #5e6ad2;
+  --color-indigo-soft: #6d78d5;
+  --color-blue: #4ea7fc;
+  --color-green: #27a644;
+  --color-red: #eb5757;
+  --color-red-alt: #f34e52;
+  --color-orange: #fc7840;
+  --color-yellow: #f2c94c;
+  --color-teal: #00b8cc;
+  --color-lime: #e4f222;
+  --color-focus-ring: rgba(94, 106, 210, 0.4);
+
+  /* ---------- Buttons ---------- */
+  --color-button-invert-bg: #e5e5e6;
+  --color-button-invert-text: #08090a;
+  --color-button-secondary-bg: rgba(255, 255, 255, 0.05);
+
+  /* ---------- Selection ---------- */
+  --color-selection-dim: rgba(94, 106, 210, 0.3);
+  --color-selection-bg: var(--color-selection-dim);
+
+  /* ---------- Code / syntax ---------- */
+  --code-text: #e2e4e7;
+  --code-keyword: #f79ce0;
+  --code-variable: #f7bf8b;
+  --code-string: #ffdf9f;
+  --code-constant: #8fa6ff;
+  --code-entity: #83dcdc;
+  --code-comment: #62666d;
+  --code-highlight-bg: rgba(0, 255, 5, 0.1);
+  --code-added-bg: rgba(39, 166, 68, 0.07);
+  --code-removed-bg: rgba(243, 78, 82, 0.1);
+  --code-removed-strong-bg: rgba(255, 0, 0, 0.12);
+  --token-comment: #62666d;
+  --token-string: #ffdf9f;
+  --token-constant: #8fa6ff;
+  --token-variable: #f7bf8b;
+  --token-keyword: #e391cf;
+  --token-entity: #83dcdc;
+  --token-punctuation: #d0d6e0;
+  --token-text: #d0d6e0;
+  --diff-char-added-bg: #27a6442e;
+  --diff-char-removed-bg: #fc31422e;
+
+  /* ---------- Chart inks ---------- */
+  --ink-a: #7b83eb;
+  --ink-b: #deb949;
+  --ink-a-muted: color-mix(in srgb, var(--ink-a) 30%, transparent);
+  --ink-b-muted: color-mix(in srgb, var(--ink-b) 30%, transparent);
+
+  /* ---------- Radii ---------- */
+  --radius-2: 2px;
+  --radius-4: 4px;
+  --radius-5: 5px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-9: 9px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-22: 22px;
+  --radius-24: 24px;
+  --radius-rounded: 9999px;
+  --radius-circle: 50%;
+
+  /* ---------- Shadows ---------- */
+  --shadow-button-invert: rgba(0, 0, 0, 0) 0px 8px 2px 0px, rgba(0, 0, 0, 0.01) 0px 5px 2px 0px, rgba(0, 0, 0, 0.04) 0px 3px 2px 0px, rgba(0, 0, 0, 0.07) 0px 1px 1px 0px, rgba(0, 0, 0, 0.08) 0px 0px 1px 0px;
+  --shadow-button-secondary: rgba(255, 255, 255, 0.03) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.04) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.6) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 4px 0px;
+  --shadow-panel-ring: rgb(35, 37, 42) 0px 0px 0px 1px inset;
+  --shadow-panel-ring-glow: rgb(35, 37, 42) 0px 0px 0px 1px inset, rgba(8, 9, 10, 0.8) 0px 0px 32px 0px;
+  --shadow-panel-edge-left: rgb(35, 37, 42) 1px 0px 0px 0px inset;
+  --shadow-ring-dark: rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
+  --shadow-ring-dark-2: rgba(0, 0, 0, 0.2) 0px 0px 0px 2px;
+  --shadow-inset-soft: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px inset;
+  --shadow-float: rgba(0, 0, 0, 0.25) 0px 2px 32px 0px;
+  --shadow-hairline-inset: rgba(255, 255, 255, 0.08) 0px 0px 0px 0.5px inset;
+  --shadow-translucent-inset: rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  --shadow-lift: rgba(0, 0, 0, 0.06) 0px 4px 4px -1px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px;
+  --shadow-bottom-line: rgba(0, 0, 0, 0.4) 0px 1px 0px 0px;
+  --shadow-focus-brand: rgba(94, 106, 210, 0.4) 0px 0px 0px 3px;
+
+  /* ---------- Motion ---------- */
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: linear(0 0%, 0.0411 3.4482758620689653%, 0.1342 6.896551724137931%, 0.2478 10.344827586206897%, 0.3638 13.793103448275863%, 0.4725 17.24137931034483%, 0.5692 20.689655172413794%, 0.6524 24.137931034482758%, 0.7222 27.586206896551722%, 0.7798 31.034482758620687%, 0.8267 34.48275862068965%, 0.8644 37.93103448275862%, 0.8944 41.37931034482759%, 0.9181 44.827586206896555%, 0.9367 48.27586206896552%, 0.9513 51.72413793103449%, 0.9626 55.17241379310346%, 0.9714 58.62068965517243%, 0.9782 62.068965517241395%, 0.9834 65.51724137931036%, 0.9874 68.96551724137933%, 0.9904 72.4137931034483%, 0.9927 75.86206896551727%, 0.9945 79.31034482758623%, 0.9959 82.7586206896552%, 0.9969 86.20689655172416%, 0.9976 89.65517241379311%, 0.9982 93.10344827586208%, 0.9987 96.55172413793105%, 1 100%);
+  --speed-quick: 0.1s;
+  --speed-regular: 0.16s;
+  --speed-medium: 0.3s;
+  --speed-slow: 0.4s;
+  --speed-dot-in: 0.42s;
+  --speed-drawer: 0.5s;
+  --speed-slower: 0.7s;
+
+  /* ---------- Layout ---------- */
+  --header-height: 72px;
+  --homepage-max-width: 1344px;
+  --homepage-outer-padding: 24px;
+  --homepage-padding-inset: 8px;
+  --inset-padding: 32px;
+  --page-padding-left: calc(max(var(--homepage-outer-padding), (100vw - var(--homepage-max-width)) / 2 + var(--homepage-outer-padding)) + var(--homepage-padding-inset));
+  --page-padding-right: var(--page-padding-left);
+  --page-max-width: calc((100vw - var(--page-padding-left) * 2) * (1164 / 1344));
+  --spine: calc(max(var(--homepage-outer-padding), (100vw - var(--homepage-max-width)) / 2 + var(--homepage-outer-padding)) + var(--homepage-padding-inset));
+  --panel-text-inset: 16px;
+  --rail: calc(var(--spine) - var(--panel-text-inset));
+  --panel-width: 400px;
+  --panel-height: 560px;
+  --panel-gap: 20px;
+  --prose-max-width: 680px;
+  --wide-inset: calc((var(--page-max-width) - var(--page-padding-left) - var(--page-padding-right) - var(--prose-max-width)));
+  --slide-width: min(var(--page-max-width), calc(100vw - var(--page-padding-left) * 2));
+  --slide-radius: calc(var(--slide-width) * 12 / 1164);
+  --carousel-width: 560px;
+  --asset-inset: 20px;
+  --scrollbar-width: 12px;
+
+  /* ---------- Focus ---------- */
+  --focus-ring-color: var(--color-brand-bg);
+  --focus-ring-width: 1px;
+  --focus-ring-outline: var(--focus-ring-width) solid var(--focus-ring-color);
+
+  /* ---------- Switch ---------- */
+  --Switch-height: 20px;
+  --Switch-width: 32px;
+  --Switch-thumb-size: 14px;
+}
+
+/* Laptop and below: gutters tighten, inset padding drops to 8px */
+@media (max-width: 1024px) {
+  :root {
+    --homepage-outer-padding: 28px;
+    --inset-padding: 8px;
+  }
+}
+
+/* Mobile: 64px header, 16px outer gutter */
+@media (max-width: 640px) {
+  :root {
+    --header-height: 64px;
+    --homepage-outer-padding: 16px;
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-regular);
+  --font-mono: var(--font-monospace);
+  --color-bg-primary: var(--color-bg-primary);
+  --color-bg-level-1: var(--color-bg-level-1);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-tertiary: var(--color-text-tertiary);
+  --color-text-quaternary: var(--color-text-quaternary);
+  --color-border-primary: var(--color-border-primary);
+  --color-brand: var(--color-brand-bg);
+}
+
+/* ---------- Global resets ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  background: var(--color-bg-primary);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
+  margin: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
   font-family: var(--font-regular);
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  line-height: 24px;
+  letter-spacing: normal;
+  font-feature-settings: "cv01", "ss03";
+  font-variation-settings: normal;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-monospace);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--color-selection-bg);
+}
+
+:focus-visible {
+  outline: var(--focus-ring-outline);
+  outline-offset: 2px;
+}
+
+/* Scrollbar */
+html {
+  scrollbar-color: var(--color-border-secondary) transparent;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-secondary);
+  border: 3px solid transparent;
+  border-radius: var(--radius-rounded);
+  background-clip: padding-box;
+}
+
+.hide-scrollbars {
+  scrollbar-width: none;
+}
+
+.hide-scrollbars::-webkit-scrollbar {
+  display: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Responsive visibility helpers ---------- */
+
+.show-mobile,
+.show-tablet,
+.show-laptop,
+.show-desktop {
+  display: none !important;
+}
+
+@media (max-width: 1280px) {
+  .hide-desktop {
+    display: none !important;
+  }
+  .show-desktop {
+    display: revert !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hide-laptop {
+    display: none !important;
+  }
+  .show-laptop {
+    display: revert !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hide-tablet {
+    display: none !important;
+  }
+  .show-tablet {
+    display: revert !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .hide-mobile {
+    display: none !important;
+  }
+  .show-mobile {
+    display: revert !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideFromBottom {
+  from {
+    transform: translate3d(0, var(--initial-transform, 100%), 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideToBottom {
+  to {
+    transform: translate3d(0, var(--initial-transform, 100%), 0);
+  }
+}
+
+@keyframes slideFromTop {
+  from {
+    transform: translate3d(0, calc(var(--initial-transform, 100%) * -1), 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideToTop {
+  to {
+    transform: translate3d(0, calc(var(--initial-transform, 100%) * -1), 0);
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    transform: translate3d(calc(var(--initial-transform, 100%) * -1), 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideToLeft {
+  to {
+    transform: translate3d(calc(var(--initial-transform, 100%) * -1), 0, 0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    transform: translate3d(var(--initial-transform, 100%), 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideToRight {
+  to {
+    transform: translate3d(var(--initial-transform, 100%), 0, 0);
+  }
+}
+
+@keyframes toast-fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes toast-fade-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes toast-spin {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.15;
+  }
+}
+
+/* Logo ticker (30s linear infinite). Body inferred: track holds two copies. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Composer caret (1.25s ease infinite). Body inferred. */
+@keyframes cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
